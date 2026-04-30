@@ -53,23 +53,37 @@ modelo_arvore = DecisionTreeClassifier(max_depth=4) # Evitando Overfitting
 modelo_arvore.fit(entrada_treino, saida_treino)
 
 # ==========================================
-# 4. INTERFACE: ENTRADA DINÂMICA
+# 4. INTERFACE: ENTRADA DINÂMICA (COM LIMITES MÉDICOS)
 # ==========================================
 st.subheader("📋 Dados do Paciente")
 
 col1, col2 = st.columns(2)
 
 with col1:
-    glicose = st.slider("Glicose (mg/dL)", min_value=0.0, max_value=250.0, value=127.0)
-    idade = st.slider("Idade", min_value=1, max_value=120, value=30)
-    gravidezes = st.number_input("Número de gravidezes", min_value=0, max_value=20, value=1)
-    pele = st.slider("Espessura da pele", min_value=0.0, max_value=100.0, value=20.0)
+    # Ajustado de 40 a 400
+    glicose = st.slider("Glicose (mg/dL)", min_value=40.0, max_value=400.0, value=127.0)
+    
+    # Ajustado de 0 a 120
+    idade = st.slider("Idade", min_value=0, max_value=120, value=30)
+    
+    # Ajustado de 0 a 15
+    gravidezes = st.number_input("Número de gravidezes", min_value=0, max_value=15, value=1)
+    
+    # Ajustado de 5 a 60
+    pele = st.slider("Espessura da pele", min_value=5.0, max_value=60.0, value=20.0)
 
 with col2:
-    imc = st.slider("IMC", min_value=0.0, max_value=70.0, value=25.0)
+    # Ajustado de 10 a 60
+    imc = st.slider("IMC", min_value=10.0, max_value=60.0, value=25.0)
+    
+    # Ajustado de 0 a 3
     historico = st.slider("Histórico familiar", min_value=0.0, max_value=3.0, value=0.5)
-    pressao = st.slider("Pressão arterial (mmHg)", min_value=0.0, max_value=180.0, value=72.0)
-    insulina = st.slider("Insulina", min_value=0.0, max_value=900.0, value=80.0)
+    
+    # Ajustado de 70 a 250
+    pressao = st.slider("Pressão arterial (mmHg)", min_value=70.0, max_value=250.0, value=72.0)
+    
+    # Ajustado de 0 a 300 (Resolve o erro bizarro do risco cair com a insulina absurda!)
+    insulina = st.slider("Insulina", min_value=0.0, max_value=300.0, value=80.0)
 
 # ==========================================
 # 5. CÁLCULO E GRÁFICO PRINCIPAL (VELOCÍMETRO)
