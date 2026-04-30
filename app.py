@@ -13,27 +13,15 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import confusion_matrix
 
 # =========================
-# 2. TENTAR LER DO GOOGLE DRIVE
+# 2. CARREGAR DADOS
 # =========================
-caminho_drive = '/content/drive/MyDrive/ColabNotebooks/diabetes.csv'
-
+# O Streamlit lê o arquivo que está na mesma pasta do GitHub direto!
 try:
-    from google.colab import drive
-    drive.mount('/content/drive')
-
-    print("Tentando carregar arquivo do Google Drive...")
-    dados = pd.read_csv(caminho_drive)
-    print("Arquivo carregado do Drive com sucesso!")
-
-except:
-    print("Não encontrou no Drive. Faça upload manual...")
-
-    from google.colab import files
-    arquivos = files.upload()
-    nome_arquivo = list(arquivos.keys())[0]
-    dados = pd.read_csv(nome_arquivo)
-
-    print("Arquivo carregado via upload!")
+    dados = pd.read_csv('diabetes.csv')
+    st.success("Base de dados carregada com sucesso!")
+except FileNotFoundError:
+    st.error("Erro: O arquivo 'diabetes.csv' não foi encontrado no seu GitHub.")
+    st.stop() # Para o aplicativo aqui se não achar o arquivo
 
 # =========================
 # 3. MOSTRAR DADOS
